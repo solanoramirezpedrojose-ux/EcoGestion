@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Recoleccion, DetalleRecoleccion
 
-# Register your models here.
+admin.site.register(Recoleccion)
+admin.site.register(DetalleRecoleccion)
