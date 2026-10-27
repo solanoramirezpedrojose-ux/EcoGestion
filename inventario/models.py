@@ -17,3 +17,6 @@ class Material(models.Model):
     precio_venta_kg = models.DecimalField(max_digits = 10, decimal_places = 2)
     stock_kg = models.DecimalField(max_digits = 10, decimal_places = 2, default = 0)
     activo = models.BooleanField(default = True)
+
+    def __str__(self):
+        return self.nombre
