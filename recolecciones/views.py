@@ -8,9 +8,14 @@ from .serializers import RecoleccionSerializer, DetalleRecoleccionSerializer
 from inventario.models import Material
 
 # LISTAR Y CREAR RECOLECCIONES
-@api_view(['GET', 'POST'])
+@api_view(['GET','POST'])
 def lista_recolecciones(request):
     if request.method == 'GET':
+        if not request.user.has_perm('recolecciones.view_recoleccion'):
+            return Response(
+                {'error':'No tiene permiso para consultar recolecciones'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         recolecciones = Recoleccion.objects.all()
         estado = request.GET.get('estado')
         proveedor = request.GET.get('proveedor')
@@ -20,7 +25,7 @@ def lista_recolecciones(request):
         if proveedor:
             if not proveedor.isdigit():
                 return Response(
-                    {'error': 'El ID del proveedor no es válido.'},
+                    {'error':'El ID del proveedor no es válido.'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
             recolecciones = recolecciones.filter(
@@ -40,7 +45,11 @@ def lista_recolecciones(request):
             serializer.data
         )
     elif request.method == 'POST':
-
+        if not request.user.has_perm('recolecciones.add_recoleccion'):
+            return Response(
+                {'error':'No tiene permiso para crear recolecciones'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         serializer = RecoleccionSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
@@ -59,9 +68,19 @@ def detalle_recoleccion(request, pk):
     recoleccion = get_object_or_404(Recoleccion, pk = pk)
 
     if request.method == 'GET':
+        if not request.user.has_perm('recolecciones.view_recoleccion'):
+            return Response(
+                {'error','No tiene permiso para consultar recolecciones'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         serializer = RecoleccionSerializer(recoleccion)
         return Response(serializer.data)
     elif request.method in ['PUT','PATCH']:
+        if not request.user.has_perm('recolecciones.change_recoleccion'):
+            return Response(
+                {'error':'No tiene permiso para eliminar recolecciones'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         if recoleccion.estado != 'PENDIENTE':
             return Response(
                 {'error':'Solo se pueden modificar recolecciones pendientes.'},
@@ -80,6 +99,11 @@ def detalle_recoleccion(request, pk):
             status=status.HTTP_400_BAD_REQUEST
         )
     elif request.method == 'DELETE':
+        if not request.user.has_perm('recolecciones.delete_recoleccion'):
+            return Response(
+                {'error':'No tiene permiso para eliminar recolecciones'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         if recoleccion.estado != 'PENDIENTE':
             return Response(
                 {'error':'No se puede eliminar una recolección finalizada.'},
@@ -94,6 +118,11 @@ def detalle_recoleccion(request, pk):
 # CONFIRMAR RECOLECCION
 @api_view(['POST'])
 def confirmar_recoleccion(request, pk):
+    if not request.user.has_perm('reolecciones.change_recoleccion'):
+        return Response(
+            {'error':'No tiene permiso para confirmar recolecciones'},
+            status = status.HTTP_403_FORBIDDEN
+        )
     recoleccion = get_object_or_404(Recoleccion, pk=pk)
 
     if recoleccion.estado != 'PENDIENTE':
@@ -138,6 +167,11 @@ def confirmar_recoleccion(request, pk):
 # CANCELAR RECOLECCION
 @api_view(['POST'])
 def cancelar_recoleccion(request, pk):
+    if not request.user.has_perm('recolecciones.change_recoleccion'):
+        return Response(
+            {'error':'No tiene permiso para cancelar inscripciones'},
+            status = status.HTTP_403_FORBIDDEN
+        )
     recoleccion = get_object_or_404(Recoleccion, pk=pk)
 
     if recoleccion.estado != 'PENDIENTE':
@@ -156,6 +190,11 @@ def cancelar_recoleccion(request, pk):
 @api_view(['GET','POST'])
 def lista_detalles_recoleccion(request):
     if request.method == 'GET':
+        if not request.user.has_perm('recolecciones.view_detallerecoleccion'):
+            return Response(
+                {'error':'No tiene permiso para consultar detalles'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         detalles = DetalleRecoleccion.objects.all()
         recoleccion = request.GET.get('recoleccion')
 
@@ -175,7 +214,11 @@ def lista_detalles_recoleccion(request):
 
         return Response(serializer.data)
     elif request.method == 'POST':
-
+        if not request.user.has_perm('recolecciones.add_detallerecoleccion'):
+            return Response(
+                {'error':'No tiene permiso para agregar detaller'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         serializer = DetalleRecoleccionSerializer(
             data=request.data
         )
@@ -198,9 +241,19 @@ def detalle_material_recoleccion(request, pk):
     )
 
     if request.method == 'GET':
+        if not request.user.has_perm('recolecciones.view_detallerecoleccion'):
+            return Response(
+                {'error','No tiene permiso para consultar detalles'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         serializer = DetalleRecoleccionSerializer(detalle)
         return Response(serializer.data)
     elif request.method in ['PUT', 'PATCH']:
+        if not request.user.has_perm('recolecciones.change_detallerecoleccion'):
+            return Response(
+                {'error':'No tiene permiso para modificar detaller'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         if detalle.recoleccion.estado != 'PENDIENTE':
             return Response(
                 {'error':'No se puede modificar una recolección finalizada.'},
@@ -220,6 +273,11 @@ def detalle_material_recoleccion(request, pk):
             status=status.HTTP_400_BAD_REQUEST
         )
     elif request.method == 'DELETE':
+        if not request.has_perm('recolecciones.delete_detallerecoleccion'):
+            return Response(
+                {'error':'No tiene permiso para eliminar detaller'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         if detalle.recoleccion.estado != 'PENDIENTE':
             return Response(
                 {'error':'No se puede eliminar un detalle de una recolección finalizada.'},

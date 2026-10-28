@@ -20,6 +20,11 @@ def actualizar_total_venta(venta):
 @api_view(['GET', 'POST'])
 def lista_ventas(request):
     if request.method == 'GET':
+        if not request.user.has_perm('ventas.view_venta'):
+            return Response(
+                {'error':'No tiene permiso para consultar ventas.'},
+            status = status.HTTP_403_FORBIDDEN
+        )
         ventas = Venta.objects.all()
         estado = request.GET.get('estado')
         comprador = request.GET.get('comprador')
@@ -29,7 +34,7 @@ def lista_ventas(request):
         if comprador:
             if not comprador.isdigit():
                 return Response(
-                    {'error': 'El ID del comprador no es válido.'},
+                    {'error':'El ID del comprador no es válido.'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
@@ -40,6 +45,11 @@ def lista_ventas(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
+        if not request.user.has_perm('ventas.add_venta'):
+            return Response(
+                {'error':'No tiene permiso para crear ventas.'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         serializer = VentaSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -57,9 +67,19 @@ def lista_ventas(request):
 def detalle_venta(request, pk):
     venta = get_object_or_404(Venta, pk=pk)
     if request.method == 'GET':
+        if not request.user.has_perm('ventas.view_venta'):
+            return Response(
+                {'error':'No tiene permiso para consultar ventas.'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         serializer = VentaSerializer(venta)
         return Response(serializer.data)
     elif request.method in ['PUT', 'PATCH']:
+        if not request.user.has_perm('ventas.change_venta'):
+            return Response(
+                {'error': 'No tiene permiso para modificar ventas.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
         if venta.estado != 'PENDIENTE':
             return Response(
                 {'error': 'Solo se pueden modificar ventas pendientes.'},
@@ -80,6 +100,11 @@ def detalle_venta(request, pk):
             status=status.HTTP_400_BAD_REQUEST
         )
     elif request.method == 'DELETE':
+        if not request.user.has_perm('ventas.delete_venta'):
+            return Response(
+                {'error': 'No tiene permiso para eliminar ventas.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
         if venta.estado != 'PENDIENTE':
             return Response(
                 {'error': 'No se puede eliminar una venta finalizada.'},
@@ -98,6 +123,11 @@ def detalle_venta(request, pk):
 # CONFIRMAR UNA VENTA
 @api_view(['POST'])
 def confirmar_venta(request, pk):
+    if not request.user.has_perm('ventas.change_venta'):
+        return Response(
+            {'error': 'No tiene permiso para confirmar ventas.'},
+            status=status.HTTP_403_FORBIDDEN
+        )
     venta = get_object_or_404(Venta, pk=pk)
     if venta.estado != 'PENDIENTE':
         return Response(
@@ -154,6 +184,12 @@ def confirmar_venta(request, pk):
 # ANULAR UNA VENTA
 @api_view(['POST'])
 def anular_venta(request, pk):
+    if not request.user.has_perm('ventas.change_venta'):
+        return Response(
+            {'error':'No tiene permiso para anular ventas'},
+            status = status.HTTP_403_FORBIDDEN
+        )
+    
     venta = get_object_or_404(Venta, pk=pk)
     if venta.estado != 'PENDIENTE':
         return Response(
@@ -171,6 +207,11 @@ def anular_venta(request, pk):
 @api_view(['GET', 'POST'])
 def lista_detalles_venta(request):
     if request.method == 'GET':
+        if not request.user.has_perm('ventas.view_detalleventa'):
+            return Response(
+                {'error': 'No tiene permiso para consultar detalles de ventas.'},
+                status=status.HTTP_403_FORBIDDEN
+            )     
         detalles = DetalleVenta.objects.all()
         venta = request.GET.get('venta')
 
@@ -185,6 +226,11 @@ def lista_detalles_venta(request):
         serializer = DetalleVentaSerializer(detalles, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
+        if not request.user.has_perm('ventas.add_detalleventa'):
+            return Response(
+                {'error': 'No tiene permiso para agregar detalles de ventas.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
         serializer = DetalleVentaSerializer(data=request.data)
         if serializer.is_valid():
 
@@ -209,9 +255,19 @@ def lista_detalles_venta(request):
 def detalle_material_venta(request, pk):
     detalle = get_object_or_404(DetalleVenta, pk=pk)
     if request.method == 'GET':
+        if not request.user.has_perm('ventas.view_detalleventa'):
+            return Response(
+                {'error': 'No tiene permiso para consultar detalles de ventas.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
         serializer = DetalleVentaSerializer(detalle)
         return Response(serializer.data)
     elif request.method in ['PUT', 'PATCH']:
+        if not request.user.has_perm('ventas.change_detalleventa'):
+            return Response(
+                {'error': 'No tiene permiso para modificar detalles de ventas.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
         if detalle.venta.estado != 'PENDIENTE':
             return Response(
                 {'error': 'No se puede modificar una venta finalizada.'},
@@ -240,12 +296,16 @@ def detalle_material_venta(request, pk):
             status=status.HTTP_400_BAD_REQUEST
         )
     elif request.method == 'DELETE':
+        if not request.user.has_perm('ventas.delete_detalleventa'):
+            return Response(
+                {'error': 'No tiene permiso para eliminar detalles de ventas.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
         if detalle.venta.estado != 'PENDIENTE':
             return Response(
                 {'error': 'No se puede eliminar un detalle de una venta finalizada.'},
                 status=status.HTTP_409_CONFLICT
             )
-
         venta = detalle.venta
         detalle.delete()
 
