@@ -10,9 +10,9 @@ class MaterialSerializers(serializers.ModelSerializer):
     def validate_precio_venta_kg(self, value):
         if value <= 0:
             raise serializers.ValidationError("El precio de venta debe ser mayor a cero")
-        return
+        return value
 
     def validate_stock_kg(self, value):
         if value < 0:
             raise serializers.ValidationError("El stock no puede ser negativo")
-        return
+        return value

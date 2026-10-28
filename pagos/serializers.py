@@ -22,7 +22,7 @@ class PagoSerializer(serializers.ModelSerializer):
         if self.instance:
             pagos = pagos.exclude(pk=self.instance.pk)
         total_pagado = pagos.aggregate(
-            total = sum('monto')
+            total = Sum('monto')
         )['total'] or Decimal('0.00')
 
         if total_pagado + monto > venta.total:

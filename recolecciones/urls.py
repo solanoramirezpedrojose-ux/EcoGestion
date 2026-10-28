@@ -7,4 +7,5 @@ urlpatterns = [
     path('detalles/<int:pk>/', views.detalle_material_recoleccion, name='detalle_material_recoleccion'),
     path('<int:pk>/', views.detalle_recoleccion, name='detalle_recoleccion'),
     path('<int:pk>/confirmar/', views.confirmar_recoleccion,name='confirmar_recoleccion'),
+    path('<int:pk>/cancelar/', views.cancelar_recoleccion, name='cancelar_recoleccion'),,
 ]
