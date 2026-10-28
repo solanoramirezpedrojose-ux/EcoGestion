@@ -10,7 +10,7 @@ class Persona(models.Model):
     identificacion = models.CharField(max_length = 30, unique = True)
     telefono = models.CharField(max_length = 20)
     correo = models.EmailField()
-    dirreccion = models.CharField(max_length = 200)
+    direccion = models.CharField(max_length = 200)
     tipo_persona = models.CharField(
         max_length = 10,
         choices = TIPOS_PERSONA,

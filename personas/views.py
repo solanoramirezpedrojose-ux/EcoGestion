@@ -25,6 +25,8 @@ def lista_personas(request):
             )
         serializer = PersonaSerializer(data = request.data)
         if serializer.is_valid():
+            serializer.save()
+            
             return Response(
                 serializer.errors,
                 status = status.HTTP_201_CREATED
