@@ -1,0 +1,1955 @@
+{
+    "info": {
+        "_postman_id": "7e29041d-8e1b-4b10-991f-c73b381d2287",
+        "name": "EcoGestion API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "45457743",
+        "_collection_link": "https://go.postman.co/collection/45457743-7e29041d-8e1b-4b10-991f-c73b381d2287?source=collection_link"
+    },
+    "item": [
+        {
+            "name": "Obtener Token",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"12345\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/token/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "token",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Listar Personas",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/personas/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "personas",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registrar Persona",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"nombre\": \"Carlos Ramirez\",\r\n  \"identificacion\": \"123456789\",\r\n  \"telefono\": \"88887777\",\r\n  \"correo\": \"carlos@example.com\",\r\n  \"direccion\": \"Esparza\",\r\n  \"tipo_persona\": \"PROVEEDOR\",\r\n  \"activo\": true\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/personas/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "personas",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Consultar Persona por ID",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/personas/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "personas",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Persona PUT",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"nombre\": \"Carlos Ramirez\",\r\n  \"identificacion\": \"123456789\",\r\n  \"telefono\": \"89998888\",\r\n  \"correo\": \"carlos@example.com\",\r\n  \"direccion\": \"Esparza Centro\",\r\n  \"tipo_persona\": \"PROVEEDOR\",\r\n  \"activo\": true\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/personas/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "personas",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Persona PATCH",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"correo\": \"carlosnuevo@example.com\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/personas/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "personas",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Persona inexistente 404",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/personas/9999/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "personas",
+                        "9999",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Persona duplicada 400",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"nombre\": \"Juan Perez\",\r\n  \"identificacion\": \"123456789\",\r\n  \"telefono\": \"87776666\",\r\n  \"correo\": \"juan@example.com\",\r\n  \"direccion\": \"Puntarenas\",\r\n  \"tipo_persona\": \"PROVEEDOR\",\r\n  \"activo\": true\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/personas/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "personas",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Acceso sin token 401",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "",
+                        "disabled": true
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/personas/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "personas",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Listar Materiales",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registrar Material",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"nombre\": \"Aluminio\",\r\n  \"categoria\": \"METAL\",\r\n  \"precio_venta_kg\": \"500.00\",\r\n  \"activo\": true\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registrar Recoleccion",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"proveedor\": 1,\r\n  \"observaciones\": \"Recoleccion de aluminio en Esparza\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registrar Detalle Recoleccion",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"recoleccion\": 1,\r\n  \"material\": 1,\r\n  \"cantidad_kg\": \"20.00\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/detalles/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "detalles",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Consultar Detalle Recoleccion",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/detalles/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "detalles",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Detalle Recoleccion PUT",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"recoleccion\": 1,\r\n  \"material\": 1,\r\n  \"cantidad_kg\": \"25.00\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/detalles/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "detalles",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Detalle Recoleccion PATCH",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"cantidad_kg\": \"30.00\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/detalles/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "detalles",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Recoleccion PUT",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"proveedor\": 1,\r\n  \"observaciones\": \"Recoleccion de 30 kg de aluminio en Esparza Centro\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Recoleccion PATCH",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"observaciones\": \"Recoleccion de 30 kg de aluminio verificada y lista para recibir\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Confirmar Recoleccion",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/1/confirmar/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "1",
+                        "confirmar",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verificar Stock de Aluminio",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Recoleccion ya cofirmada",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/1/confirmar/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "1",
+                        "confirmar",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verificar stock despues del 409",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Modificar Recoleccion Confirmada 409",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"observaciones\": \"Intentando modificar una recoleccion ya recibida\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Eliminar Recoleccion Confirmada 409",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Crear recoleccion para eliminar",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"proveedor\": 1,\r\n  \"observaciones\": \"Recoleccion temporal para probar DELETE\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Eliminar Recoleccion Pendiente",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/2/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "2",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Consultar recoleccion Eliminada 404",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/2/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "2",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Crear Recoleccion para cancelar",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": []
+                },
+                "url": {
+                    "raw": ""
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Cancelar recoleccion",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/3/cancelar/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "3",
+                        "cancelar",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Confirmar recoleccion cancelada",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/3/confirmar/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "3",
+                        "confirmar",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Crear recoleccion para eliminar detalle",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"proveedor\": 1,\r\n  \"observaciones\": \"Recoleccion temporal para probar eliminacion de detalles\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registrar detalle para eliminar",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"recoleccion\": 4,\r\n  \"material\": 1,\r\n  \"cantidad_kg\": \"5.00\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/detalles/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "detalles",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Eliminar detalle recoleccion",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/detalles/2/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "detalles",
+                        "2",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Consultar detalle eliminado 404",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/recolecciones/detalles/2/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "recolecciones",
+                        "detalles",
+                        "2",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registrar Comprador",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"nombre\": \"Maria Lopez\",\r\n  \"identificacion\": \"987654321\",\r\n  \"telefono\": \"87776666\",\r\n  \"correo\": \"maria@example.com\",\r\n  \"direccion\": \"Puntarenas\",\r\n  \"tipo_persona\": \"COMPRADOR\",\r\n  \"activo\": true\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/personas/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "personas",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registrar Venta",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"comprador\": 2\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/ventas/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "ventas",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registrar detalle de venta",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"venta\": 1,\r\n  \"material\": 1,\r\n  \"cantidad_kg\": \"10.00\",\r\n  \"precio_unitario\": \"500.00\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/ventas/detalles/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "ventas",
+                        "detalles",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Consultar Venta por ID",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/ventas/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "ventas",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Detalle Venta",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"venta\": 1,\r\n  \"material\": 1,\r\n  \"cantidad_kg\": \"8.00\",\r\n  \"precio_unitario\": \"500.00\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/ventas/detalles/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "ventas",
+                        "detalles",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar detalle de venta PATCH",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"cantidad_kg\": \"6.00\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/ventas/detalles/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "ventas",
+                        "detalles",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verificar total de la venta",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/ventas/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "ventas",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Confirmar venta",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/ventas/1/confirmar/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "ventas",
+                        "1",
+                        "confirmar",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Veriicar stock despues de la venta",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Intentar confirmar la venta dos veces",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/ventas/1/confirmar/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "ventas",
+                        "1",
+                        "confirmar",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Modificar venta confirmada 409",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"comprador\": 2\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/ventas/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "ventas",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Eliminar venta confirmada 409",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/ventas/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "ventas",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registrar pago",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"venta\": 1,\r\n  \"monto\": \"1000.00\",\r\n  \"metodo_pago\": \"EFECTIVO\",\r\n  \"referencia\": \"Abono inicial\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/pagos/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "pagos",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Consultar pago por ID",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/pagos/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "pagos",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar pago PATCH",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"monto\": \"1200.00\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/pagos/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "pagos",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar pago PUT",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"venta\": 1,\r\n  \"monto\": \"1500.00\",\r\n  \"metodo_pago\": \"TRANSFERENCIA\",\r\n  \"referencia\": \"Pago actualizado\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/pagos/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "pagos",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Pago negativo 400",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"venta\": 1,\r\n  \"monto\": \"-100.00\",\r\n  \"metodo_pago\": \"EFECTIVO\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/pagos/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "pagos",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Pago superior al saldo 400",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"venta\": 1,\r\n  \"monto\": \"2000.00\",\r\n  \"metodo_pago\": \"SINPE\",\r\n  \"referencia\": \"Intento de pago excesivo\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/pagos/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "pagos",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Filtrar pagos",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/pagos/?venta=1&metodo_pago=TRANSFERENCIA",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "pagos",
+                        ""
+                    ],
+                    "query": [
+                        {
+                            "key": "venta",
+                            "value": "1"
+                        },
+                        {
+                            "key": "metodo_pago",
+                            "value": "TRANSFERENCIA"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Eliminar pago",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/pagos/1/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "pagos",
+                        "1",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Registrar material temporal",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"nombre\": \"Plastico Temporal\",\r\n  \"categoria\": \"PLASTICO\",\r\n  \"precio_venta_kg\": \"200.00\",\r\n  \"activo\": true\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Material PUT",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"nombre\": \"Plastico Temporal\",\r\n  \"categoria\": \"PLASTICO\",\r\n  \"precio_venta_kg\": \"250.00\",\r\n  \"activo\": true\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/2/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        "2",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Actualizar Material PATCH",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"precio_venta_kg\": \"300.00\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/2/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        "2",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Filtrar Materiales",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/?categoria=PLASTICO&activo=true&buscar=Temporal&page=1",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        ""
+                    ],
+                    "query": [
+                        {
+                            "key": "categoria",
+                            "value": "PLASTICO"
+                        },
+                        {
+                            "key": "activo",
+                            "value": "true"
+                        },
+                        {
+                            "key": "buscar",
+                            "value": "Temporal"
+                        },
+                        {
+                            "key": "page",
+                            "value": "1"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Eliminar material temporal",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token e97f290a793685ba92524bf8b6956b8c64b09057"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/2/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        "2",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Crear material sin permiso 403",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "token 2eee83c2f64418cabca5c7ac3d245d572f44bff6"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"nombre\": \"Material Sin Permiso\",\r\n  \"categoria\": \"METAL\",\r\n  \"precio_venta_kg\": \"150.00\",\r\n  \"activo\": true\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/materiales/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "materiales",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Obtener Token consulta",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n  \"username\": \"consulta_ecogestion\",\r\n  \"password\": \"Consulta12345\"\r\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:8000/api/token/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8000",
+                    "path": [
+                        "api",
+                        "token",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
