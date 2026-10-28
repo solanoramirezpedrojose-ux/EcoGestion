@@ -17,6 +17,7 @@ def lista_pagos(request):
         pagos = Pago.objects.all()
         venta = request.GET.get('venta')
         metodo_pago = request.GET.get('metodo_pago')
+        comprador = request.GET.get('comprador')
 
         if venta:
             if not venta.isdigit():
@@ -25,6 +26,13 @@ def lista_pagos(request):
                     status=status.HTTP_400_BAD_REQUEST
                 )
             pagos = pagos.filter(venta_id=venta)
+        if comprador:
+            if not comprador.isdigit():
+                return Response(
+                    {'error':'El ID del comprador no es valido'},
+                    status = status.HTTP_400_BAD_REQUEST
+                )
+            pagos = pagos.filter(venta__comprador_id = comprador)
         if metodo_pago:
             pagos = pagos.filter(metodo_pago=metodo_pago)
         pagos = pagos.order_by('-fecha_pago')
