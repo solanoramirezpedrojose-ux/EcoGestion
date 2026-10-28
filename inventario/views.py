@@ -10,6 +10,11 @@ from .serializers import MaterialSerializers
 @api_view(['GET','POST'])
 def lista_material(request):
     if request.method == 'GET':
+        if not request.user.has_perm('inventario.view_material'):
+            return Response(
+                {'error':'No tiene permiso para consultar materiales'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         materiales = Material.objects.all()
         categoria = request.GET.get('categoria')
         activo = request.GET.get('activo')
@@ -39,6 +44,11 @@ def lista_material(request):
 
         return paginador.get_paginated_response(serializer.data)
     elif request.method == 'POST':
+        if not request.user.has_perm('inventario.add_material'):
+            return Response(
+                {'error':'No tiene permiso para crear materiales'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         serializer = MaterialSerializers(data = request.data)
 
         if serializer.is_valid():
@@ -54,13 +64,22 @@ def lista_material(request):
 
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def detalle_material(request, pk):
-
     material = get_object_or_404(Material, pk=pk)
 
     if request.method == 'GET':
+        if not request.user.has_perm('inventario.view_material'):
+            return Response(
+                {'error','No tiene permiso para consultar materiales'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         serializer = MaterialSerializers(material)
         return Response(serializer.data)
-    elif request.method in ['PUT', 'PATCH']:
+    elif request.method in ['PUT','PATCH']:
+        if not request.user.has_perm('inventario.change_material'):
+            return Response(
+                {'error','No tiene permiso para modificar materiales'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         serializer = MaterialSerializers(
             material,
             data=request.data,
@@ -75,6 +94,11 @@ def detalle_material(request, pk):
         )
 
     elif request.method == 'DELETE':
+        if not request.user.has_perm('inventario.delete_material'):
+            return Response(
+                {'error':'No tiene permiso para eliminar materiales'},
+                status = status.HTTP_403_FORBIDDEN
+            )
         try:
             material.delete()
             return Response(
