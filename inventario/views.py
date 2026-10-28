@@ -69,7 +69,7 @@ def detalle_material(request, pk):
     if request.method == 'GET':
         if not request.user.has_perm('inventario.view_material'):
             return Response(
-                {'error','No tiene permiso para consultar materiales'},
+                {'error':'No tiene permiso para consultar materiales'},
                 status = status.HTTP_403_FORBIDDEN
             )
         serializer = MaterialSerializers(material)
@@ -77,20 +77,20 @@ def detalle_material(request, pk):
     elif request.method in ['PUT','PATCH']:
         if not request.user.has_perm('inventario.change_material'):
             return Response(
-                {'error','No tiene permiso para modificar materiales'},
+                {'error':'No tiene permiso para modificar materiales'},
                 status = status.HTTP_403_FORBIDDEN
             )
         serializer = MaterialSerializers(
             material,
-            data=request.data,
-            partial=(request.method == 'PATCH')
+            data = request.data,
+            partial = (request.method == 'PATCH')
         )
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(
             serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
+            status = status.HTTP_400_BAD_REQUEST
         )
 
     elif request.method == 'DELETE':
@@ -102,12 +102,12 @@ def detalle_material(request, pk):
         try:
             material.delete()
             return Response(
-                status=status.HTTP_204_NO_CONTENT
+                status = status.HTTP_204_NO_CONTENT
             )
         except ProtectedError:
             return Response(
                 {
-                    'error': 'No se puede eliminar un material con registros relacionados.'
+                    'error':'No se puede eliminar un material con registros relacionados.'
                 },
-                status=status.HTTP_409_CONFLICT
+                status = status.HTTP_409_CONFLICT
             )

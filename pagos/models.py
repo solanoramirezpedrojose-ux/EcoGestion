@@ -19,7 +19,8 @@ class Pago(models.Model):
         choices = METODOS_PAGO,
         default = 'EFECTIVO',
     )
-    referecia = models.CharField(max_length = 100, blank = True)
+    referencia = models.CharField(max_length = 100, blank = True)
+    fecha_pago = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"Pago {self.id} - Venta {self.venta.id}"

@@ -118,7 +118,7 @@ def detalle_recoleccion(request, pk):
 # CONFIRMAR RECOLECCION
 @api_view(['POST'])
 def confirmar_recoleccion(request, pk):
-    if not request.user.has_perm('reolecciones.change_recoleccion'):
+    if not request.user.has_perm('recolecciones.change_recoleccion'):
         return Response(
             {'error':'No tiene permiso para confirmar recolecciones'},
             status = status.HTTP_403_FORBIDDEN
@@ -273,7 +273,7 @@ def detalle_material_recoleccion(request, pk):
             status=status.HTTP_400_BAD_REQUEST
         )
     elif request.method == 'DELETE':
-        if not request.has_perm('recolecciones.delete_detallerecoleccion'):
+        if not request.user.has_perm('recolecciones.delete_detallerecoleccion'):
             return Response(
                 {'error':'No tiene permiso para eliminar detaller'},
                 status = status.HTTP_403_FORBIDDEN
