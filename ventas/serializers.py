@@ -39,7 +39,7 @@ class DetalleVentaSerializer(serializers.ModelSerializer):
         venta = data.get('venta', self.instance.venta if self.instance else None)
 
         if self.instance and self.instance.venta.estado != 'PENDIENTE':
-            raise serializers.ValidationError("No se pueden modificar detalles de una veta finalizada")
+            raise serializers.ValidationError("No se pueden modificar detalles de una venta finalizada")
 
         if venta and venta.estado !='PENDIENTE':
             raise serializers.ValidationError("Solo se pueden agregar detalles a ventas pendientes")
