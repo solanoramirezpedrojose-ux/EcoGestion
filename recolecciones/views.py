@@ -70,7 +70,7 @@ def detalle_recoleccion(request, pk):
     if request.method == 'GET':
         if not request.user.has_perm('recolecciones.view_recoleccion'):
             return Response(
-                {'error','No tiene permiso para consultar recolecciones'},
+                {'error':'No tiene permiso para consultar recolecciones'},
                 status = status.HTTP_403_FORBIDDEN
             )
         serializer = RecoleccionSerializer(recoleccion)
@@ -78,7 +78,7 @@ def detalle_recoleccion(request, pk):
     elif request.method in ['PUT','PATCH']:
         if not request.user.has_perm('recolecciones.change_recoleccion'):
             return Response(
-                {'error':'No tiene permiso para eliminar recolecciones'},
+                {'error':'No tiene permiso para modificar recolecciones'},
                 status = status.HTTP_403_FORBIDDEN
             )
         if recoleccion.estado != 'PENDIENTE':
@@ -169,7 +169,7 @@ def confirmar_recoleccion(request, pk):
 def cancelar_recoleccion(request, pk):
     if not request.user.has_perm('recolecciones.change_recoleccion'):
         return Response(
-            {'error':'No tiene permiso para cancelar inscripciones'},
+            {'error':'No tiene permiso para cancelar recolecciones'},
             status = status.HTTP_403_FORBIDDEN
         )
     recoleccion = get_object_or_404(Recoleccion, pk=pk)
@@ -216,7 +216,7 @@ def lista_detalles_recoleccion(request):
     elif request.method == 'POST':
         if not request.user.has_perm('recolecciones.add_detallerecoleccion'):
             return Response(
-                {'error':'No tiene permiso para agregar detaller'},
+                {'error':'No tiene permiso para agregar detalles'},
                 status = status.HTTP_403_FORBIDDEN
             )
         serializer = DetalleRecoleccionSerializer(
@@ -243,7 +243,7 @@ def detalle_material_recoleccion(request, pk):
     if request.method == 'GET':
         if not request.user.has_perm('recolecciones.view_detallerecoleccion'):
             return Response(
-                {'error','No tiene permiso para consultar detalles'},
+                {'error':'No tiene permiso para consultar detalles'},
                 status = status.HTTP_403_FORBIDDEN
             )
         serializer = DetalleRecoleccionSerializer(detalle)

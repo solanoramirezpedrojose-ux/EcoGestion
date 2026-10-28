@@ -16,6 +16,8 @@ class PagoSerializer(serializers.ModelSerializer):
     def validate(self, data):
         venta = data.get('venta', self.instance.venta if self.instance else None)
         monto = data.get('monto', self.instance.monto if self.instance else None)
+        if self.instance and venta != self.instance.venta:
+            raise serializers.ValidationError("No se puede cambiar la venta de un pago")
         if venta.estado != 'CONFIRMADA':
             raise serializers.ValidationError("Solo se pueden tegistrar pagos de ventas confirmadas")
         pagos = Pago.objects.filter(venta=venta)
