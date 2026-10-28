@@ -4,6 +4,7 @@ from.models import Material
 class MaterialSerializers(serializers.ModelSerializer):
     model = 'Material'
     fields = '__all__'
+    read_only_fields = ['stock_kg']
 
     def validate_precio_venta_kg(self, value):
         if value <= 0:

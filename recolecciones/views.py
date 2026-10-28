@@ -16,7 +16,7 @@ def lista_recolecciones(request):
                 {'error':'No tiene permiso para consultar recolecciones'},
                 status = status.HTTP_403_FORBIDDEN
             )
-        recolecciones = Recoleccion.objects.all()
+        recolecciones = Recoleccion.objects.select_related('proveedor').all()
         estado = request.GET.get('estado')
         proveedor = request.GET.get('proveedor')
 
