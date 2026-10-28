@@ -5,6 +5,7 @@ class RecoleccionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recoleccion
         fields = '__all__'
+        read_only_fields = ['estado']
 
     def validate_proveedor(self, value):
         if not value.activo:
@@ -34,4 +35,8 @@ class DetalleRecoleccionSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("No se puede modificiar detalles de una recoleccion finalizada")
         if recoleccion and recoleccion.estado != 'PENDIENTE':
             raise serializers.ValidationError("Solo se pueden agregar detaller a recoleccione pendientes")
+        if self.instance and recoleccion != self.instance.recoleccion:
+            raise serializers.ValidationError(
+                "No se puede cambiar la recolección de un detalle."
+            )
         return data
