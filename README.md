@@ -401,9 +401,7 @@ El archivo de la colección debe incluirse en el proyecto en la siguiente ubicac
 
 
 ### Solicitudes documentadas de Postman
-
 La colección EcoGestion API contiene 61 solicitudes para comprobar las operaciones CRUD, autenticación, permisos, filtros y reglas de negocio del sistema.
-
 A continuación se documentan 20 solicitudes representativas con sus métodos, endpoints, descripciones y resultados esperados.
 
 ### 1. Obtener Token
@@ -551,7 +549,6 @@ Para comprobar los errores 403 se utiliza un usuario del grupo Consulta, sin per
 
 ## 13. Consideraciones técnicas
 El sistema utiliza permisos nativos de Django, autenticación por tokens y validaciones en los serializers y vistas.
-Los archivos `.env`, `.venv` y otros archivos privados del entorno local no deben incluirse en el repositorio.
 
 ## 14. Integrantes del proyecto
 - Pedro
