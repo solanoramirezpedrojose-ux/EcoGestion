@@ -7,14 +7,20 @@ from django.db.models.deletion import ProtectedError
 from .models import Material
 from .serializers import MaterialSerializers
 
+# Esta vista permite consultar todas las personas con GET
+# y registrar una nueva persona mediante POST.
 @api_view(['GET','POST'])
 def lista_material(request):
     if request.method == 'GET':
+        # Verificamos que el usuario tenga permiso para consultar personas.
+        # Si no tiene permiso, devolvemos un error 403.
         if not request.user.has_perm('inventario.view_material'):
             return Response(
                 {'error':'No tiene permiso para consultar materiales'},
                 status = status.HTTP_403_FORBIDDEN
             )
+        # Comprueba que el stock no sea negativo.
+        # Este campo tambien esta protegido como solo lectura en el serializer.
         materiales = Material.objects.all()
         categoria = request.GET.get('categoria')
         activo = request.GET.get('activo')
@@ -35,7 +41,8 @@ def lista_material(request):
         if orden not in ordenes_permitidos:
             orden = 'nombre'
         materiales = materiales.order_by(orden, 'id')
-
+        # Dividimos el listado en paginas de cinco materiales.
+        # Esto evita devolver demasiados registros en una sola respuesta.
         paginador = PageNumberPagination()
         paginador.page_size = 5
 
@@ -62,8 +69,13 @@ def lista_material(request):
             status = status.HTTP_400_BAD_REQUEST
         )
 
+# Esta vista trabaja con una persona especifica mediante su ID.
+# GET consulta, PUT actualiza todo, PATCH actualiza algunos campos
+# y DELETE elimina el registro cuando esta permitido.
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def detalle_material(request, pk):
+    # Buscamos la persona por su ID.
+# Si no existe, Django devuelve automaticamente un error 404.
     material = get_object_or_404(Material, pk=pk)
 
     if request.method == 'GET':
@@ -104,6 +116,8 @@ def detalle_material(request, pk):
             return Response(
                 status = status.HTTP_204_NO_CONTENT
             )
+        # Evitamos eliminar una persona que tiene recolecciones
+# o ventas relacionadas, para mantener la integridad de los datos.
         except ProtectedError:
             return Response(
                 {
