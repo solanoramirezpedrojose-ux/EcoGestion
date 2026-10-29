@@ -1,93 +1,223 @@
 # EcoGestión
+Sistema de gestión para un centro de acopio y reciclaje, desarrollado con Python, Django, Django REST Framework y MySQL.
 
-Sistema de gestión para un centro de acopio y reciclaje, desarrollado con Django y Django REST Framework.
-## Descripción del proyecto
-EcoGestión es una API REST que permite administrar las operaciones de un centro de acopio, incluyendo el registro de personas, el control de materiales reciclables, las recolecciones, las ventas y los pagos.
+## 1. Descripción del proyecto
+EcoGestión es una API REST que permite administrar las operaciones de un centro de acopio y reciclaje, incluyendo el registro de personas, el control de materiales reciclables, las recolecciones, las ventas y los pagos.
+El sistema permite controlar el inventario de materiales, registrar operaciones y gestionar el acceso a los recursos mediante autenticación por tokens y permisos de usuario.
 
-El sistema permite gestionar el inventario de materiales y controlar el acceso mediante autenticación por tokens y permisos de usuario.
-
-## Tecnologías utilizadas
-- Python
+## 2. Tecnologías utilizadas
+- Python 3.13
 - Django 5.2
 - Django REST Framework
 - MySQL
+- MySQL Workbench
 - TokenAuthentication
 - Postman
 - Git y GitHub
+- Visual Studio Code
 
-## Módulos del sistema
-1. Personas: administración de proveedores y compradores.
-2. Inventario: registro de materiales, precios y existencias.
-3. Recolecciones: registro de materiales recibidos y actualización del inventario.
-4. Ventas: registro de ventas y descuento de materiales del inventario.
-5. Pagos: registro de pagos asociados a las ventas.
+## 3. Módulos del sistema
+**Personas:** Administración de proveedores y compradores.
+**Inventario:** Registro de materiales reciclables, precios y cantidades disponibles.
+**Recolecciones:** Registro de materiales recibidos y actualización del inventario.
+**Ventas:** Registro de ventas, detalles y descuento de materiales del inventario.
+**Pagos:** Registro y administración de pagos asociados a las ventas.
 
-## Diagrama entidad-relación
-
+## 4. Diagrama entidad-relación
 El siguiente diagrama representa los siete modelos del sistema EcoGestión, sus atributos, claves primarias, claves foráneas y relaciones.
-
 ![Diagrama entidad-relación de EcoGestión](docs/DiagramaEntidad-Relacion.jpg)
 
-## Requisitos previos
-- Tener Python instalado.
-- Tener MySQL instalado y funcionando.
-- Tener acceso a una terminal.
-- Contar con las credenciales de un usuario MySQL con permisos sobre la base de datos.
+Las relaciones principales son:
+- Persona - Recolección: Una persona puede registrar varias recolecciones.
+- Persona - Venta: Una persona puede realizar varias compras.
+- Recolección - DetalleRecolección: Una recolección puede contener varios detalles.
+- Material - DetalleRecolección: Un material puede aparecer en diferentes recolecciones.
+- Venta - DetalleVenta: Una venta puede contener varios detalles.
+- Material - DetalleVenta: Un material puede aparecer en diferentes ventas.
+- Venta - Pago: Una venta puede tener varios pagos.
 
-## Instalación del proyecto
-1. Obtener el proyecto
-Clonar el repositorio desde GitHub y abrir la carpeta EcoGestion en Visual Studio Code.
+## 5. Requisitos previos
+Para ejecutar EcoGestión es necesario contar con:
+- Python instalado.
+- MySQL Server instalado y funcionando.
+- MySQL Workbench para administrar la base de datos.
+- Visual Studio Code o cualquier editor de código.
+- Acceso a una terminal.
+- Credenciales de un usuario MySQL con permisos sobre la base de datos.
+Postman se utiliza para realizar las pruebas de la API.
 
-### 2. Crear el entorno virtual
-Desde la carpeta donde se encuentra manage.py, ejecutar:
-    py -m venv .venv
+## 6. Instalación y configuración
+
+### 6.1. Obtener el proyecto
+Clonar el repositorio desde GitHub o descargar el proyecto en formato ZIP.
+Abrir la carpeta principal de EcoGestión en Visual Studio Code, donde se encuentra el archivo `manage.py`.
+
+### 6.2. Crear el entorno virtual
+
+Desde la terminal de VS Code, ejecutar:
+```powershell
+py -m venv .venv
+```
 Activar el entorno virtual en PowerShell:
-    .\.venv\Scripts\Activate.ps1
+Cuando el entorno esté activado, debe aparecer `(.venv)` al inicio de la terminal.
 
-### 3. Instalar las dependencias
+### 6.3. Instalar las dependencias
+Actualizar pip:
+```powershell
+python -m pip install --upgrade pip
+```
+La forma recomendada de instalar todas las dependencias del proyecto es:
+```powershell
+pip install -r requirements.txt
+```
+Este comando instala automáticamente las bibliotecas necesarias con las versiones indicadas en `requirements.txt`.
+También es posible instalarlas manualmente mediante los siguientes comandos:
+
+**Instalar Django:**
+```powershell
+pip install Django==5.2.18
+```
+**Instalar Django REST Framework:**
+```powershell
+pip install djangorestframework==3.18.3
+```
+**Instalar MySQL Client:**
+```powershell
+pip install mysqlclient==2.3.0
+```
+**Instalar python-dotenv:**
+```powershell
+pip install python-dotenv==1.2.4
+```
+No es necesario ejecutar los comandos individuales si ya se utilizó correctamente `pip install -r requirements.txt`.
+
+Para verificar las instalaciones:
+```powershell
+py -m django --version
+```
+```powershell
+pip list
+```
+### 6.4. Configurar la base de datos MySQL
+Abrir MySQL Workbench y conectarse con un usuario que tenga permisos para crear bases de datos y usuarios.
+Crear la base de datos:
+```sql
+CREATE DATABASE IF NOT EXISTS ecogestion_db;
+```
+Crear un usuario para el proyecto, si todavía no existe:
+```sql
+CREATE USER 'ecogestion_user'@'localhost'
+IDENTIFIED BY 'tu_contrasena_segura';
+```
+Asignar permisos sobre la base de datos:
+```sql
+GRANT ALL PRIVILEGES ON ecogestion_db.*
+TO 'ecogestion_user'@'localhost';
+```
+Para ejecutar las pruebas automatizadas de Django con MySQL, el usuario también necesita permisos sobre la base de datos temporal de pruebas:
+```sql
+GRANT ALL PRIVILEGES ON test_ecogestion_db.*
+TO 'ecogestion_user'@'localhost';
+```
+Estos comandos son ejemplos de configuración inicial. Si la base de datos y el usuario ya existen, no es necesario crearlos nuevamente.
+
+### 6.5. Configurar las variables de entorno
+El proyecto utiliza un archivo `.env` para almacenar las credenciales de MySQL.
+Copiar el archivo `.env.example` y guardar la copia con el nombre `.env`.
+Configurar los datos correspondientes:
+```env
+DB_NAME=ecogestion_db
+DB_USER=usuario_mysql
+DB_PASSWORD=contrasena_mysql
+DB_HOST=localhost
+DB_PORT=3306
+```
+
+Se deben reemplazar los valores de ejemplo por las credenciales de MySQL configuradas en la computadora.
+El archivo `.env` contiene información privada y no debe subirse a GitHub.
+
+### 6.6. Generar y aplicar las migraciones
+
+Para detectar cambios en los modelos:
+```powershell
+py manage.py makemigrations
+```
+Para aplicar las migraciones a MySQL:
+```powershell
+py manage.py migrate
+```
+Las migraciones incluidas en el repositorio permiten crear las tablas del sistema.
+
+### 6.7. Crear un superusuario
 Ejecutar:
-    pip install -r requirements.txt
+```powershell
+py manage.py createsuperuser
+```
 
-### 4. Configurar la base de datos
-Crear una base de datos en MySQL llamada:
-    ecogestion_db
-El usuario de MySQL debe tener permisos sobre esta base de datos.
+Completar el nombre de usuario, correo electrónico si se solicita y contraseña.
+El superusuario permite ingresar al administrador de Django y configurar los grupos y permisos.
 
-### 5. Configurar las variables de entorno
-Copiar el archivo .env.example y renombrar la copia como .env.
-Completar las variables con las credenciales correspondientes:
-    DB_NAME=ecogestion_db
-    DB_USER=tu_usuario_mysql
-    DB_PASSWORD=tu_contrasena_mysql
-    DB_HOST=localhost
-    DB_PORT=3306
+### 6.8. Configurar grupos y usuarios
+Ingresar al panel de administración:
+http://localhost:8000/admin/
+Crear los siguientes grupos en la sección Grupos:
 
-### 6. Aplicar las migraciones
+**Administrador:** Permisos para consultar, crear, modificar y eliminar registros.
+**Operador:** Permisos para consultar, crear y modificar registros.
+**Consulta:** Permisos únicamente para consultar registros.
+
+Asignar a cada grupo los permisos correspondientes de los modelos:
+- Persona
+- Material
+- Recoleccion
+- DetalleRecoleccion
+- Venta
+- DetalleVenta
+- Pago
+
+Posteriormente, crear o asignar usuarios a los grupos correspondientes.
+### 6.9. Ejecutar el servidor
+
 Ejecutar:
-    py manage.py migrate
 
-### 7. Crear un superusuario
-Ejecutar:
-    py manage.py createsuperuser
-Completar los datos solicitados.
+```powershell
+py manage.py runserver
+```
 
-### 8. Ejecutar el servidor
-Ejecutar:
-    py manage.py runserver
-El servidor estará disponible en:
-    http://localhost:8000/
-El panel de administración se encuentra en:
-    http://localhost:8000/admin/
+Servidor de desarrollo:
 
-## Autenticación y permisos
-La API utiliza autenticación mediante tokens.
+http://localhost:8000/
+
+Panel de administración:
+
+http://localhost:8000/admin/
+
+Para detener el servidor, presionar `Ctrl + C` en la terminal.
+
+## 7. Autenticación y permisos
+
+La API utiliza `TokenAuthentication` de Django REST Framework.
+
 Para obtener un token, enviar una solicitud POST a:
 
-    http://localhost:8000/api/token/
-Con el usuario y contraseña correspondientes.
-Para acceder a los endpoints protegidos, enviar el encabezado:
-    Authorization: Token <token_obtenido>
-EcoGestión cuenta con tres grupos de usuarios: Administrador, Operador y Consulta.
+`http://localhost:8000/api/token/`
+
+Body JSON:
+
+```json
+{
+  "username": "tu_usuario",
+  "password": "tu_contrasena"
+}
+```
+
+Una vez obtenido el token, agregar el siguiente encabezado en las solicitudes protegidas:
+
+```text
+Authorization: Token TU_TOKEN
+```
+
+### Matriz de permisos
 
 | Operación | Administrador | Operador | Consulta |
 |---|---|---|---|
@@ -101,19 +231,19 @@ EcoGestión cuenta con tres grupos de usuarios: Administrador, Operador y Consul
 | Anular ventas | Sí | Sí | No |
 | Registrar pagos | Sí | Sí | No |
 
-Los permisos se administran mediante los grupos y permisos de Django.
+Los permisos se administran mediante los grupos y permisos nativos de Django.
 
-Todos los usuarios necesitan autenticarse mediante un token para acceder a los endpoints.
+Los endpoints del sistema requieren autenticación mediante token.
 
-Si un usuario no está autenticado, se devuelve HTTP 401.
-Si está autenticado, pero no tiene permisos, se devuelve HTTP 403.
+Un usuario sin autenticación recibe HTTP 401.
 
-Los permisos no permiten omitir las validaciones y reglas de negocio del sistema.
+Un usuario autenticado, pero sin los permisos necesarios, recibe HTTP 403.
 
+Las reglas de negocio deben cumplirse independientemente de los permisos del usuario.
 
-## Reglas de negocio
+## 8. Reglas de negocio
 
-### 1. Personas
+### 8.1. Personas
 
 Regla 1: La identificación de cada persona debe ser única.
 
@@ -121,7 +251,7 @@ Regla 2: Una persona debe estar activa y tener el tipo PROVEEDOR o AMBOS para re
 
 Regla 3: Una persona debe estar activa y tener el tipo COMPRADOR o AMBOS para registrar ventas.
 
-### 2. Inventario
+### 8.2. Inventario
 
 Regla 4: El nombre de cada material debe ser único.
 
@@ -129,7 +259,7 @@ Regla 5: El precio de venta por kilogramo debe ser mayor a cero.
 
 Regla 6: El stock no puede modificarse directamente desde la API. Se actualiza mediante las confirmaciones de recolecciones y ventas.
 
-### 3. Recolecciones
+### 8.3. Recolecciones
 
 Regla 7: Las cantidades de los materiales recolectados deben ser mayores a cero.
 
@@ -143,7 +273,7 @@ Regla 11: Al confirmar una recolección, las cantidades recibidas se suman al in
 
 Regla 12: Solamente se pueden cancelar recolecciones pendientes.
 
-### 4. Ventas
+### 8.4. Ventas
 
 Regla 13: Las cantidades y los precios unitarios de los detalles deben ser mayores a cero.
 
@@ -159,7 +289,7 @@ Regla 18: El subtotal de cada detalle se calcula multiplicando la cantidad por e
 
 Regla 19: Solamente se pueden anular ventas pendientes.
 
-### 5. Pagos
+### 8.5. Pagos
 
 Regla 20: El monto de cada pago debe ser mayor a cero.
 
@@ -169,72 +299,181 @@ Regla 22: La suma de los pagos realizados no puede superar el total de la venta.
 
 Regla 23: No se permite cambiar la venta asociada a un pago existente.
 
+## 9. Endpoints de la API
 
-## Endpoints de la API
-URL base: http://localhost:8000
+URL base: `http://localhost:8000`
 
-### Autenticación
-- POST /api/token/: Obtener token de acceso.
+### 9.1. Autenticación
 
-### Personas
-- GET y POST /api/personas/: Listar y registrar personas.
-- GET, PUT, PATCH y DELETE /api/personas/<id>/: Consultar, actualizar o eliminar personas.
+- POST `/api/token/`: Obtener token de acceso.
 
-### Inventario
-- GET y POST /api/materiales/: Listar y registrar materiales.
-- GET, PUT, PATCH y DELETE /api/materiales/<id>/: Consultar, actualizar o eliminar materiales.
-- Filtros: categoria, activo, buscar, orden y page.
-- Paginación: 5 materiales por página.
+### 9.2. Personas
 
-### Recolecciones
-- GET y POST /api/recolecciones/: Listar y registrar recolecciones.
-- GET, PUT, PATCH y DELETE /api/recolecciones/<id>/: Consultar, actualizar o eliminar recolecciones.
-- POST /api/recolecciones/<id>/confirmar/: Confirmar recolección y aumentar inventario.
-- POST /api/recolecciones/<id>/cancelar/: Cancelar una recolección.
-- GET y POST /api/recolecciones/detalles/: Listar y registrar detalles.
-- GET, PUT, PATCH y DELETE /api/recolecciones/detalles/<id>/: Consultar, actualizar o eliminar detalles.
-- Filtros: estado, proveedor y page.
-- Paginación: 5 recolecciones por página.
+- GET `/api/personas/`: Listar personas.
+- POST `/api/personas/`: Registrar persona.
+- GET `/api/personas/<id>/`: Consultar persona.
+- PUT `/api/personas/<id>/`: Actualizar persona.
+- PATCH `/api/personas/<id>/`: Actualizar parcialmente.
+- DELETE `/api/personas/<id>/`: Eliminar persona.
 
-### Ventas
-- GET y POST /api/ventas/: Listar y registrar ventas.
-- GET, PUT, PATCH y DELETE /api/ventas/<id>/: Consultar, actualizar o eliminar ventas.
-- POST /api/ventas/<id>/confirmar/: Confirmar venta y descontar inventario.
-- POST /api/ventas/<id>/anular/: Anular una venta.
-- GET y POST /api/ventas/detalles/: Listar y registrar detalles.
-- GET, PUT, PATCH y DELETE /api/ventas/detalles/<id>/: Consultar, actualizar o eliminar detalles.
-- Filtros: estado y comprador.
+### 9.3. Inventario
 
-### Pagos
-- GET y POST /api/pagos/: Listar y registrar pagos.
-- GET, PUT, PATCH y DELETE /api/pagos/<id>/: Consultar, actualizar o eliminar pagos.
-- Filtros: venta, comprador y metodo_pago.
+- GET `/api/materiales/`: Listar materiales.
+- POST `/api/materiales/`: Registrar material.
+- GET `/api/materiales/<id>/`: Consultar material.
+- PUT `/api/materiales/<id>/`: Actualizar material.
+- PATCH `/api/materiales/<id>/`: Actualizar parcialmente.
+- DELETE `/api/materiales/<id>/`: Eliminar material.
 
-### Autenticación y permisos
-- TokenAuthentication: Autenticación mediante token.
-- Administrador: Consultar, crear, modificar y eliminar.
-- Operador: Consultar, crear y modificar.
-- Consulta: Únicamente consultar.
-- Header: Authorization: Token <token>
+Filtros disponibles:
 
-### Respuestas HTTP
-- 200: Operación correcta.
-- 201: Registro creado.
-- 204: Registro eliminado.
-- 400: Datos inválidos.
-- 401: No autenticado.
-- 403: Sin permisos.
-- 404: Registro no encontrado.
-- 409: Conflicto con una regla de negocio.
+- `?categoria=METAL`: Filtrar por categoría.
+- `?activo=true`: Filtrar materiales activos.
+- `?buscar=aluminio`: Buscar materiales por nombre.
+- `?orden=nombre`: Ordenar por nombre.
+- `?orden=-precio_venta_kg`: Ordenar por precio descendente.
+- `?page=1`: Consultar una página.
 
+Paginación: 5 materiales por página.
 
-## Pruebas automatizadas
-El proyecto incluye pruebas automatizadas para validar operaciones CRUD, reglas de negocio, autenticación y permisos.
+### 9.4. Recolecciones
 
-Para ejecutar todas las pruebas:
-    py manage.py test
+- GET `/api/recolecciones/`: Listar recolecciones.
+- POST `/api/recolecciones/`: Registrar recolección.
+- GET `/api/recolecciones/<id>/`: Consultar recolección.
+- PUT `/api/recolecciones/<id>/`: Actualizar recolección.
+- PATCH `/api/recolecciones/<id>/`: Actualizar parcialmente.
+- DELETE `/api/recolecciones/<id>/`: Eliminar recolección.
+- POST `/api/recolecciones/<id>/confirmar/`: Confirmar recolección y aumentar inventario.
+- POST `/api/recolecciones/<id>/cancelar/`: Cancelar recolección.
+
+Detalles de recolección:
+
+- GET `/api/recolecciones/detalles/`: Listar detalles.
+- POST `/api/recolecciones/detalles/`: Registrar detalle.
+- GET `/api/recolecciones/detalles/<id>/`: Consultar detalle.
+- PUT `/api/recolecciones/detalles/<id>/`: Actualizar detalle.
+- PATCH `/api/recolecciones/detalles/<id>/`: Actualizar parcialmente.
+- DELETE `/api/recolecciones/detalles/<id>/`: Eliminar detalle.
+
+Filtros disponibles:
+
+- `?estado=PENDIENTE`: Filtrar por estado.
+- `?proveedor=1`: Filtrar por proveedor.
+- `?page=1`: Consultar una página.
+- `/api/recolecciones/detalles/?recoleccion=1`: Consultar detalles de una recolección.
+
+Paginación: 5 recolecciones por página.
+
+### 9.5. Ventas
+
+- GET `/api/ventas/`: Listar ventas.
+- POST `/api/ventas/`: Registrar venta.
+- GET `/api/ventas/<id>/`: Consultar venta.
+- PUT `/api/ventas/<id>/`: Actualizar venta.
+- PATCH `/api/ventas/<id>/`: Actualizar parcialmente.
+- DELETE `/api/ventas/<id>/`: Eliminar venta.
+- POST `/api/ventas/<id>/confirmar/`: Confirmar venta y descontar inventario.
+- POST `/api/ventas/<id>/anular/`: Anular venta.
+
+Detalles de venta:
+
+- GET `/api/ventas/detalles/`: Listar detalles.
+- POST `/api/ventas/detalles/`: Registrar detalle.
+- GET `/api/ventas/detalles/<id>/`: Consultar detalle.
+- PUT `/api/ventas/detalles/<id>/`: Actualizar detalle.
+- PATCH `/api/ventas/detalles/<id>/`: Actualizar parcialmente.
+- DELETE `/api/ventas/detalles/<id>/`: Eliminar detalle.
+
+Filtros disponibles:
+
+- `?estado=PENDIENTE`: Filtrar ventas por estado.
+- `?comprador=1`: Filtrar ventas por comprador.
+- `/api/ventas/detalles/?venta=1`: Consultar detalles de una venta.
+
+### 9.6. Pagos
+
+- GET `/api/pagos/`: Listar pagos.
+- POST `/api/pagos/`: Registrar pago.
+- GET `/api/pagos/<id>/`: Consultar pago.
+- PUT `/api/pagos/<id>/`: Actualizar pago.
+- PATCH `/api/pagos/<id>/`: Actualizar parcialmente.
+- DELETE `/api/pagos/<id>/`: Eliminar pago.
+
+Filtros disponibles:
+
+- `?venta=1`: Filtrar por venta.
+- `?comprador=1`: Filtrar por comprador.
+- `?metodo_pago=EFECTIVO`: Filtrar por método de pago.
+
+## 10. Códigos de respuesta HTTP
+
+- 200 OK: Operación realizada correctamente.
+- 201 Created: Registro creado correctamente.
+- 204 No Content: Registro eliminado correctamente.
+- 400 Bad Request: Datos inválidos o error de validación.
+- 401 Unauthorized: Usuario no autenticado.
+- 403 Forbidden: Usuario sin permisos suficientes.
+- 404 Not Found: Registro inexistente.
+- 409 Conflict: Operación que incumple una regla de negocio.
+
+## 11. Pruebas automatizadas
+
+El proyecto incluye pruebas automatizadas para validar las operaciones CRUD, reglas de negocio, autenticación y permisos.
 Durante el desarrollo se ejecutaron satisfactoriamente 16 pruebas automatizadas.
+Para ejecutar todas las pruebas:
 
-## Integrantes del proyecto
+```powershell
+py manage.py test
+```
+
+Para ejecutar las pruebas de un módulo específico:
+
+```powershell
+py manage.py test personas
+```
+
+```powershell
+py manage.py test inventario
+```
+
+```powershell
+py manage.py test recolecciones
+```
+
+```powershell
+py manage.py test ventas
+```
+
+Las pruebas de Django utilizan una base de datos temporal y no deben modificar los registros de producción.
+
+## 12. Pruebas con Postman
+El proyecto cuenta con una colección de Postman utilizada para probar los endpoints de EcoGestión.
+Se realizaron 60 solicitudes para verificar operaciones CRUD, autenticación, permisos, filtros, reglas de negocio y respuestas HTTP.
+El archivo de la colección debe incluirse en el proyecto en la siguiente ubicación:
+
+`postman/EcoGestion_API.postman_collection.json`
+
+### Importar la colección
+
+1. Abrir Postman.
+2. Seleccionar Import.
+3. Buscar el archivo JSON dentro de la carpeta `postman`.
+4. Importar la colección.
+5. Ejecutar el servidor Django.
+6. Obtener un token de autenticación mediante `/api/token/`.
+7. Configurar los encabezados de autenticación.
+8. Ejecutar las solicitudes correspondientes.
+
+Para probar las operaciones administrativas se utiliza un superusuario de Django.
+
+Para comprobar los errores 403 se utiliza un usuario del grupo Consulta, sin permisos de escritura.
+
+## 13. Consideraciones técnicas
+El sistema utiliza permisos nativos de Django, autenticación por tokens y validaciones en los serializers y vistas.
+Los archivos `.env`, `.venv` y otros archivos privados del entorno local no deben incluirse en el repositorio.
+
+## 14. Integrantes del proyecto
+
 - Pedro
 - Stacy
