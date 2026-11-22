@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
+from .views import usuario_actual
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +27,5 @@ urlpatterns = [
     path('api/ventas/', include('ventas.urls')),
     path('api/pagos/', include('pagos.urls')),
     path('api/token/', obtain_auth_token, name = 'api_token'),
+    path('api/usuario/', usuario_actual),
 ]
